@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="400px"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_corners"
+    android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/pop_device_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="20px"
+            android:text="Device"
+            android:textColor="#ffffff"
+            android:textSize="28px" />
+
+        <TextView
+            android:id="@+id/pop_device_connect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="20px"
+            android:text="连接"
+            android:textColor="#ffffff"
+            android:textSize="28px" />
+
+        <TextView
+            android:id="@+id/pop_device_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="20px"
+            android:text="删除设备"
+            android:textColor="#ffffff"
+            android:textSize="28px" />
+
+
+</LinearLayout>

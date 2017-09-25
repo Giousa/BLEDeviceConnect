@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="100px"
+              android:id="@+id/ll_device_item">
+
+    <TextView
+        android:id="@+id/tv_device_id"
+        android:gravity="center"
+        android:textSize="40px"
+        android:textColor="#000000"
+        android:text="SDTV23992302292929"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>
