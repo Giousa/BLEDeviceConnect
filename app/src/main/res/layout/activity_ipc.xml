@@ -7,6 +7,7 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="100px">
 
@@ -27,16 +28,16 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="200px"
-        android:layout_marginTop="100px">
+        android:layout_height="150px"
+        android:layout_below="@+id/relativeLayout">
 
     </android.support.v7.widget.RecyclerView>
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="600px"
-        android:layout_marginTop="300px"
+        android:layout_height="700px"
+        android:layout_marginTop="200px"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -98,7 +99,7 @@
                 android:id="@+id/tv_power2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="加压腔室：3"
+                android:text="一:0,二:0,三:0,四:0"
                 android:textSize="20sp"
                 android:textStyle="bold"/>
 
@@ -114,86 +115,143 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
                 <TextView
-                    android:text="运行模式："
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="运行模式："/>
 
                 <EditText
                     android:id="@+id/et_model"
-                    android:text="7"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="7"/>
 
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
                 <TextView
-                    android:text="运行时间："
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="运行时间："/>
 
                 <EditText
                     android:id="@+id/et_time"
-                    android:text="5"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="5"/>
 
             </LinearLayout>
 
             <LinearLayout
-                android:visibility="gone"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
                 <TextView
-                    android:text="保持时间："
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="保持时间："/>
 
                 <EditText
-                    android:focusable="false"
                     android:id="@+id/et_keep_time"
-                    android:text="0x01"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:text="0x01"/>
 
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
                 <TextView
-                    android:text="工作压力："
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="工作压力："/>
 
                 <EditText
                     android:id="@+id/et_power"
-                    android:text="100"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="100"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="一腔室："/>
+
+                <CheckBox
+                    android:id="@+id/cb_box1"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
                 <TextView
-                    android:text="加压腔室："
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="二腔室："/>
+
+                <CheckBox
+                    android:id="@+id/cb_box2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="三腔室："/>
+
                 <CheckBox
-                    android:id="@+id/cb_box"
+                    android:id="@+id/cb_box3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="四腔室："/>
+
+                <CheckBox
+                    android:id="@+id/cb_box4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 

@@ -74,6 +74,15 @@ public class IPCActivity extends AppCompatActivity {
     @InjectView(R.id.tv_content)
     TextView mTvContent;
 
+    @InjectView(R.id.cb_box1)
+    CheckBox mCbBox1;
+    @InjectView(R.id.cb_box2)
+    CheckBox mCbBox2;
+    @InjectView(R.id.cb_box3)
+    CheckBox mCbBox3;
+    @InjectView(R.id.cb_box4)
+    CheckBox mCbBox4;
+
     //开始数据
     //AA 0A 07 11 09 09 DD 11 01 9E FB EE
     byte[] startByte = new byte[]{(byte) 0xAA, (byte) 0x0A, (byte) 0x07, (byte) 0x11, (byte) 0x09,
@@ -112,8 +121,7 @@ public class IPCActivity extends AppCompatActivity {
     //AA 0A 07 11 09 09 DD 13 90 52 3B EE
     byte[] setBackByte = new byte[]{(byte) 0xAA, (byte) 0x0A, (byte) 0x07, (byte) 0x11, (byte) 0x09,
             (byte) 0x09, (byte) 0xDD, (byte) 0x13, (byte) 0x90, (byte) 0x52, (byte) 0x3B, (byte) 0xEE};
-    @InjectView(R.id.cb_box)
-    CheckBox mCbBox;
+
 
 
     private PopupWindow mPopupWindow;
@@ -125,7 +133,10 @@ public class IPCActivity extends AppCompatActivity {
     private byte mModelByte;
     private byte mTimeByte;
     private byte mPowerByte;
-    private byte mPower2Byte;
+    private boolean mCheckBoolean1;
+    private boolean mCheckBoolean2;
+    private boolean mCheckBoolean3;
+    private boolean mCheckBoolean4;
 
     private final ServiceConnection mServiceConnection = new ServiceConnection() {
 
@@ -323,7 +334,9 @@ public class IPCActivity extends AppCompatActivity {
             mTvPower.setText("压力：有误");
         }
 
-        mTvPower2.setText("加压腔室：" + power2);
+        String s = chamberPower(power2);
+
+        mTvPower2.setText(s);
     }
 
 
@@ -333,14 +346,34 @@ public class IPCActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ipc);
         ButterKnife.inject(this);
 
-        mCbBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mCbBox1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b){
-                    mPower2Byte = 1;
-                }else{
-                    mPower2Byte = 0;
-                }
+                mCheckBoolean1 = b;
+            }
+        });
+
+        mCbBox2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                mCheckBoolean2 = b;
+
+            }
+        });
+
+        mCbBox3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                mCheckBoolean3 = b;
+
+            }
+        });
+
+        mCbBox4.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                mCheckBoolean4 = b;
+
             }
         });
     }
@@ -502,7 +535,7 @@ public class IPCActivity extends AppCompatActivity {
                 if (mConnected) {
                     setBle();
                 } else {
-                    ToastUtils.SimpleToast("蓝牙已断开，请重新连接！");
+                    ToastUtils.SimpleToast("蓝牙已断开，请重新连接！"+byteToCo());
                 }
                 break;
             case R.id.btn_stop:
@@ -552,10 +585,11 @@ public class IPCActivity extends AppCompatActivity {
             return;
         }
 
+        byte chamberByte = getChamberByte();
 
         final byte[] setByte = new byte[]{(byte) 0xAA, (byte) 0x0F, (byte) 0x07, (byte) 0x11, (byte) 0x09,
                 (byte) 0x09, (byte) 0xDD, (byte) 0x13, mModelByte, mTimeByte, (byte) 0x00,
-                (byte) 0x00, mPowerByte, mPower2Byte, (byte) 0x3C, (byte) 0xBB, (byte) 0xEE};
+                (byte) 0x00, mPowerByte, chamberByte, (byte) 0x3C, (byte) 0xBB, (byte) 0xEE};
 
         mBluetoothLeService.WriteValueByte(setByte);
         mTvContent.setText("发送【设置】数据");
@@ -564,5 +598,205 @@ public class IPCActivity extends AppCompatActivity {
     private void stopBle() {
         mBluetoothLeService.WriteValueByte(stopByte);
         mTvContent.setText("发送【停止】数据");
+    }
+
+
+//            0000
+//            0001
+//            0010
+//            0011
+//
+//            0100
+//            0101
+//            0110
+//            0111
+//
+//            1000
+//            1001
+//            1010
+//            1011
+//
+//            1100
+//            1101
+//            1110
+//            1111
+
+    //4321
+    private String chamberPower(byte b){
+
+        String content = "";
+
+        switch (b){
+            case 0:
+                content = "四:0,三:0,二:0,一:0";
+                break;
+
+            case 1:
+                content = "四:0,三:0,二:0,一:1";
+                break;
+
+            case 2:
+                content = "四:0,三:0,二:1,一:0";
+                break;
+
+            case 3:
+                content = "四:0,三:0,二:1,一:1";
+                break;
+
+            case 4:
+                content = "四:0,三:1,二:0,一:0";
+                break;
+
+            case 5:
+                content = "四:0,三:1,二:0,一:1";
+                break;
+
+            case 6:
+                content = "四:0,三:1,二:1,一:0";
+                break;
+
+            case 7:
+                content = "四:0,三:1,二:1,一:1";
+                break;
+
+            case 8:
+                content = "四:1,三:0,二:0,一:0";
+                break;
+
+            case 9:
+                content = "四:1,三:0,二:0,一:1";
+                break;
+
+            case 10:
+                content = "四:1,三:0,二:1,一:0";
+                break;
+
+            case 11:
+                content = "四:1,三:0,二:1,一:1";
+                break;
+
+            case 12:
+                content = "四:1,三:1,二:0,一:0";
+                break;
+
+            case 13:
+                content = "四:1,三:1,二:0,一:1";
+                break;
+
+            case 14:
+                content = "四:1,三:1,二:1,一:0";
+                break;
+
+            case 15:
+                content = "四:1,三:1,二:1,一:1";
+                break;
+        }
+
+        return content;
+    }
+
+    //4321
+    private byte getChamberByte(){
+
+        byte chamberByte;
+
+        if(mCheckBoolean1){
+            if(mCheckBoolean2){
+                if(mCheckBoolean3){
+                    if(mCheckBoolean4){
+//                        chamberByte = (byte) 0x1111;
+                        chamberByte = 15;
+                    }else {
+//                        chamberByte = (byte) 0x0111;
+                        chamberByte = 7;
+                    }
+                }else {
+                    if(mCheckBoolean4){
+//                        chamberByte = (byte) 0x1011;
+                        chamberByte = 11;
+                    }else {
+//                        chamberByte = (byte) 0x0011;
+                        chamberByte = 3;
+                    }
+                }
+
+            }else {
+                if(mCheckBoolean3){
+                    if(mCheckBoolean4){
+//                        chamberByte = (byte) 0x1101;
+                        chamberByte = 13;
+                    }else {
+//                        chamberByte = (byte) 0x0101;
+                        chamberByte = 5;
+                    }
+                }else {
+                    if(mCheckBoolean4){
+//                        chamberByte = (byte) 0x1001;
+                        chamberByte = 9;
+                    }else {
+//                        chamberByte = (byte) 0x0001;
+                        chamberByte = 1;
+                    }
+                }
+            }
+
+        }else {
+
+            if(mCheckBoolean2){
+                if(mCheckBoolean3){
+                    if(mCheckBoolean4){
+//                        chamberByte = (byte) 0x1110;
+                        chamberByte = 14;
+                    }else {
+//                        chamberByte = (byte) 0x0110;
+                        chamberByte = 6;
+                    }
+                }else {
+                    if(mCheckBoolean4){
+//                        chamberByte = (byte) 0x1010;
+                        chamberByte = 10;
+                    }else {
+//                        chamberByte = (byte) 0x0010;
+                        chamberByte = 2;
+                    }
+                }
+
+            }else {
+                if(mCheckBoolean3){
+                    if(mCheckBoolean4){
+//                        chamberByte = (byte) 0x1100;
+                        chamberByte = 12;
+                    }else {
+//                        chamberByte = (byte) 0x0100;
+                        chamberByte = 4;
+                    }
+                }else {
+                    if(mCheckBoolean4){
+//                        chamberByte = (byte) 0x1000;
+                        chamberByte = 8;
+                    }else {
+//                        chamberByte = (byte) 0x0000;
+                        chamberByte = 0;
+                    }
+                }
+            }
+
+        }
+
+
+
+        return chamberByte;
+    }
+
+    private char[] c = {'1','1','0','1'};
+
+    private byte byteToCo(){
+
+        byte b = 0;
+        for (byte i = 0; i < 4; i++) {
+            b += c[i]<<i;
+        }
+
+        return b;
     }
 }
